@@ -1,34 +1,71 @@
-name: Scraper Chlorofil
+import requests
+from bs4 import BeautifulSoup
+import json
+from datetime import datetime
 
-on:
-  schedule:
-    - cron: '0 6 * * *'
-  workflow_dispatch:
+# ---- Configuration ----
+URL = "https://chlorofil.fr/actualites"
+BASE_URL = "https://chlorofil.fr"
+OUTPUT_FILE = "chlorofil.json"
 
-permissions:
-  contents: write
+# ---- Récupération de la page ----
+def get_page(url):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    }
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()  # Arrête si erreur (404, 500...)
+    return response.text
 
-jobs:
-  scrape:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+# ---- Extraction des articles ----
+def parse_articles(html):
+    soup = BeautifulSoup(html, "html.parser")
+    articles = soup.find_all("article", class_="articletype-1")
+    
+    resultats = []
 
-      - name: Installation Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+    for article in articles:
 
-      - name: Installation des bibliothèques
-        run: pip install -r requirements.txt
+        # Titre
+        titre_tag = article.find("span", itemprop="name")
+        titre = titre_tag.get_text(strip=True) if titre_tag else "Sans titre"
 
-      - name: Lancement du scraper
-        run: python scraper.py
+        # Date
+        date_tag = article.find("time")
+        date = date_tag["datetime"] if date_tag else "Date inconnue"
 
-      - name: Sauvegarde du JSON
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add chlorofil.json
-          git commit -m "Mise à jour automatique" || echo "Rien à mettre à jour"
-          git push
+        # Lien
+        lien_tag = article.find("h1").find("a") if article.find("h1") else None
+        lien = BASE_URL + lien_tag["href"] if lien_tag else BASE_URL
+
+        # Description
+        desc_tag = article.find("div", itemprop="description")
+        description = desc_tag.get_text(strip=True) if desc_tag else ""
+
+        # Image
+        img_tag = article.find("img", class_="card-img-top")
+        image = BASE_URL + img_tag["src"] if img_tag else ""
+
+        resultats.append({
+            "titre": titre,
+            "date": date,
+            "lien": lien,
+            "description": description,
+            "image": image
+        })
+
+    return resultats
+
+# ---- Sauvegarde en JSON ----
+def sauvegarder(data, fichier):
+    with open(fichier, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    print(f"✅ {len(data)} articles sauvegardés dans {fichier}")
+
+# ---- Programme principal ----
+if __name__ == "__main__":
+    print(f"🔄 Scraping de {URL}...")
+    html = get_page(URL)
+    articles = parse_articles(html)
+    sauvegarder(articles, OUTPUT_FILE)
+    print(f"🕐 Dernière mise à jour : {datetime.now().strftime('%d/%m/%Y %H:%M')}")
