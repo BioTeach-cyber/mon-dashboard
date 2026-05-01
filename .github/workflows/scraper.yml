@@ -2,17 +2,20 @@ name: Scraper Chlorofil
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Tous les jours à 6h
-  workflow_dispatch:       # Permet de lancer manuellement
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Installation Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
