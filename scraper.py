@@ -14,14 +14,14 @@ def get_page(url):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     }
     response = requests.get(url, headers=headers)
-    response.raise_for_status()  # Arrête si erreur (404, 500...)
+    response.raise_for_status()
     return response.text
 
 # ---- Extraction des articles ----
 def parse_articles(html):
     soup = BeautifulSoup(html, "html.parser")
     articles = soup.find_all("article", class_="articletype-1")
-    
+
     resultats = []
 
     for article in articles:
@@ -57,10 +57,15 @@ def parse_articles(html):
     return resultats
 
 # ---- Sauvegarde en JSON ----
-def sauvegarder(data, fichier):
+def sauvegarder(articles, fichier):
+    # 👇 On emballe les articles avec la date de mise à jour
+    data = {
+        "derniere_maj": datetime.utcnow().isoformat(),
+        "actualites": articles
+    }
     with open(fichier, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"✅ {len(data)} articles sauvegardés dans {fichier}")
+    print(f"✅ {len(articles)} articles sauvegardés dans {fichier}")
 
 # ---- Programme principal ----
 if __name__ == "__main__":
@@ -68,4 +73,4 @@ if __name__ == "__main__":
     html = get_page(URL)
     articles = parse_articles(html)
     sauvegarder(articles, OUTPUT_FILE)
-    print(f"🕐 Dernière mise à jour : {datetime.now().strftime('%d/%m/%Y %H:%M')}")
+    print(f"🕐 Dernière mise à jour : {datetime.utcnow().strftime('%d/%m/%Y %H:%M')} UTC")
