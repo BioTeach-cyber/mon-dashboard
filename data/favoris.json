@@ -39,6 +39,34 @@
         { "nom": "Drive",  "icone": "icones/drive.png",  "url": "https://drive.google.com/" },
         { "nom": "Canva",  "icone": "icones/canva.png",  "url": "https://www.canva.com/" }
       ]
+    },
+        {
+      "id": 5,
+      "nom": "Pédagogie",
+      "favoris": [
+        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
+        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
+        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
+        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" },
+        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
+        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
+        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
+        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" }
+      ]
+    },
+        {
+      "id": 6,
+      "nom": "Pédagogie",
+      "favoris": [
+        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
+        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
+        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
+        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" },
+        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
+        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
+        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
+        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" }
+      ]
     }
   ]
 }
