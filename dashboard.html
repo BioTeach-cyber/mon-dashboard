@@ -58,33 +58,72 @@
         .horloge   { background: #7fbc48; }
         .chlorofil { background: #a6539b; }
 
-        /* ===== PLACEMENT MANUEL DE CHAQUE HEXAGONE ===== */
+        /* ===== HORLOGE ===== */
+        .horloge-heure {
+            font-size: calc(var(--s) * 0.18);
+            font-weight: bold;
+            line-height: 1;
+            letter-spacing: 1px;
+        }
 
-        /* Rangée 1 : 3 hexagones centrés sur colonnes 2,3,4 */
+        .horloge-date {
+            font-size: calc(var(--s) * 0.07);
+            font-weight: normal;
+            margin-top: calc(var(--s) * 0.03);
+            line-height: 1.3;
+            text-transform: capitalize;
+        }
+
+        /* ===== TOGGLE SEMAINE A/B ===== */
+        .toggle-semaine {
+            display: flex;
+            gap: calc(var(--s) * 0.04);
+            margin-top: calc(var(--s) * 0.04);
+            background: rgba(0,0,0,0.25);
+            border-radius: 999px;
+            padding: calc(var(--s) * 0.02);
+        }
+
+        .toggle-lettre {
+            font-size: calc(var(--s) * 0.12);
+            font-weight: bold;
+            width:  calc(var(--s) * 0.22);
+            height: calc(var(--s) * 0.22);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.35);
+            background: transparent;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        .toggle-lettre.actif {
+            background: white;
+            color: #7fbc48;
+        }
+
+        /* ===== PLACEMENT ===== */
         .r1h1 { grid-column: 2; grid-row: 1; }
         .r1h2 { grid-column: 3; grid-row: 1; }
         .r1h3 { grid-column: 4; grid-row: 1; }
 
-        /* Rangée 2 : 4 hexagones, décalés d'un demi */
         .r2h1 { grid-column: 1; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
         .r2h2 { grid-column: 2; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
         .r2h3 { grid-column: 3; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
         .r2h4 { grid-column: 4; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
 
-        /* Rangée 3 : 5 hexagones */
         .r3h1 { grid-column: 1; grid-row: 3; }
         .r3h2 { grid-column: 2; grid-row: 3; }
         .r3h3 { grid-column: 3; grid-row: 3; }
         .r3h4 { grid-column: 4; grid-row: 3; }
         .r3h5 { grid-column: 5; grid-row: 3; }
 
-        /* Rangée 4 : 4 hexagones, décalés d'un demi */
         .r4h1 { grid-column: 1; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
         .r4h2 { grid-column: 2; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
         .r4h3 { grid-column: 3; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
         .r4h4 { grid-column: 4; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
 
-        /* Rangée 5 : 5 hexagones */
         .r5h1 { grid-column: 1; grid-row: 5; }
         .r5h2 { grid-column: 2; grid-row: 5; }
         .r5h3 { grid-column: 3; grid-row: 5; }
@@ -94,6 +133,98 @@
         @media (max-width: 1200px) { :root { --s: 140px; } }
         @media (max-width: 900px)  { :root { --s: 110px; } }
         @media (max-width: 600px)  { :root { --s: 80px;  } }
+
+        /* === FAVORIS === */
+.hex.favoris {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;  /* était center */
+  padding-top: 15%;              /* pousse le contenu vers le haut de l'hexagone */
+  gap: 4px;
+}
+
+        .fav-nom-groupe {
+          font-size: 0.7rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: white;
+          text-align: center;
+          margin-bottom: 4px;
+        }
+
+        .fav-grille {
+          display: grid;
+          gap: 6px;
+          justify-items: center;
+          align-items: center;
+          padding: 0 10px;
+        }
+
+        .fav-grille a img {
+          border-radius: 8px;
+          transition: transform 0.2s;
+          object-fit: contain;
+        }
+
+        .fav-grille a:hover img {
+          transform: scale(1.15);
+        }
+
+        /* ===== CONTENU CHLOROFIL ===== */
+    .hex.chlorofil {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chlorofil-link {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+    }
+
+    .chlorofil-overlay {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px;
+      width: 100%;
+      height: 90%;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.1) 100%);
+      box-sizing: border-box;
+      align-self: center;
+    }
+
+    .chlorofil-date {
+  font-size: clamp(0.4rem, 1vw, 0.65rem);
+  color: #ccc;
+  margin: 0 0 3px 0;
+}
+
+.chlorofil-titre {
+  font-size: clamp(0.5rem, 1.2vw, 0.75rem);
+  font-weight: bold;
+  color: white;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.chlorofil-desc {
+  font-size: clamp(0.4rem, 1vw, 0.65rem);
+  color: #ddd;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
     </style>
 </head>
 <body>
@@ -114,7 +245,17 @@
     <!-- Rangée 3 -->
     <div class="hex rss     r3h1">RSS</div>
     <div class="hex favoris r3h2">FAV</div>
-    <div class="hex horloge r3h3">⏰</div>
+
+    <!-- Horloge centrale -->
+    <div class="hex horloge r3h3">
+        <div class="horloge-heure" id="heure">00:00:00</div>
+        <div class="horloge-date"  id="date">--</div>
+        <div class="toggle-semaine">
+            <div class="toggle-lettre" id="lettre-a">A</div>
+            <div class="toggle-lettre" id="lettre-b">B</div>
+        </div>
+    </div>
+
     <div class="hex favoris r3h4">FAV</div>
     <div class="hex rss     r3h5">RSS</div>
 
@@ -132,6 +273,154 @@
     <div class="hex chlorofil r5h5">📰</div>
 
 </div>
+
+<script>
+    // ===== SEMAINE A ou B =====
+    // Règle : la semaine contenant le 1er septembre = semaine A
+    // On alterne ensuite chaque semaine scolaire
+
+    function getLundiDeLaSemaine(date) {
+        const d = new Date(date);
+        const jour = d.getDay() || 7; // lundi=1 ... dimanche=7
+        d.setDate(d.getDate() - jour + 1);
+        d.setHours(0, 0, 0, 0);
+        return d;
+    }
+
+    function getSemaineAB(date) {
+        const annee = date.getFullYear();
+
+        // On cherche le 1er septembre de l'année scolaire en cours
+        // Si on est avant le 1er septembre, l'année scolaire a commencé en septembre de l'année précédente
+        const mois = date.getMonth(); // 0=jan ... 8=sep
+        const anneeScolaire = mois >= 8 ? annee : annee - 1;
+
+        const ref = new Date(anneeScolaire, 8, 1); // 1er septembre
+        const lundiRef = getLundiDeLaSemaine(ref);
+        const lundiAujourdhui = getLundiDeLaSemaine(date);
+
+        // Nombre de semaines écoulées depuis la semaine de référence
+        const diffMs = lundiAujourdhui - lundiRef;
+        const diffSemaines = Math.round(diffMs / (7 * 24 * 60 * 60 * 1000));
+
+        // Semaine 0 = A, semaine 1 = B, semaine 2 = A ...
+        return diffSemaines % 2 === 0 ? 'A' : 'B';
+    }
+
+    function mettreAJour() {
+        const now = new Date();
+
+        // Heure
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('heure').textContent = `${hh}:${mm}:${ss}`;
+
+        // Date
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        const dateStr = now.toLocaleDateString('fr-FR', options);
+        document.getElementById('date').textContent = dateStr;
+
+        // Semaine A ou B
+        const semaine = getSemaineAB(now);
+        document.getElementById('lettre-a').classList.toggle('actif', semaine === 'A');
+        document.getElementById('lettre-b').classList.toggle('actif', semaine === 'B');
+    }
+
+    mettreAJour();
+    setInterval(mettreAJour, 1000);
+
+    // === CHARGEMENT DES FAVORIS ===
+    async function chargerFavoris() {
+      const response = await fetch('data/favoris.json');
+      const data = await response.json();
+
+      const hexFavoris = document.querySelectorAll('.hex.favoris');
+
+      hexFavoris.forEach((hex, index) => {
+        const zone = data.zones[index];
+        if (!zone) return;
+
+        const nb = zone.favoris.length;
+
+        // Taille de l'hexagone réel
+        const hexWidth = hex.offsetWidth;
+
+        let colonnes;
+        if (nb <= 4) colonnes = 2;
+        else if (nb <= 6) colonnes = 3;
+        else colonnes = 3;
+
+        // Taille calculée selon la largeur disponible
+        const taille = Math.floor((hexWidth * 0.55) / colonnes);
+
+        // Taille de police calculée selon la largeur de l'hexagone
+        const taillePoliceNom = Math.floor(hexWidth * 0.07);
+
+        hex.innerHTML = `
+          <div class="fav-nom-groupe" style="font-size: ${taillePoliceNom}px;">${zone.nom}</div>
+          <div class="fav-grille" style="grid-template-columns: repeat(${colonnes}, ${taille}px);">
+            ${zone.favoris.map(f => `
+              <a href="${f.url}" target="_blank" title="${f.nom}">
+                <img src="${f.icone}" alt="${f.nom}" width="${taille}" height="${taille}">
+              </a>
+            `).join('')}
+          </div>
+        `;
+      });
+    }
+
+    async function chargerChlorofil() {
+      try {
+        const response = await fetch('data/chlorofil.json');
+        const articles = await response.json();
+
+        // Tri par date décroissante
+        articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const hexChlorofil = document.querySelectorAll('.hex.chlorofil');
+
+        hexChlorofil.forEach((hex, index) => {
+          const article = articles[index];
+          if (!article) return;
+
+          // Formater la date en français
+          const date = new Date(article.date);
+          const dateFormatee = date.toLocaleDateString('fr-FR', {
+            day: '2-digit', month: 'long', year: 'numeric'
+          });
+
+          // Image en fond
+          hex.style.backgroundImage = `url('${article.image}')`;
+          hex.style.backgroundSize = 'cover';
+          hex.style.backgroundPosition = 'center';
+
+          // Contenu
+          hex.innerHTML = `
+            <a href="${article.lien}" target="_blank" class="chlorofil-link">
+              <div class="chlorofil-overlay">
+                <p class="chlorofil-date">${dateFormatee}</p>
+                <p class="chlorofil-titre">${article.titre}</p>
+                <p class="chlorofil-desc">${article.description}</p>
+              </div>
+            </a>
+          `;
+        });
+
+      } catch (error) {
+        console.error('Erreur chargement Chlorofil :', error);
+      }
+    }
+
+    chargerChlorofil();
+
+
+    // Appel initial
+    chargerFavoris();
+    
+    // Recalcul si la fenêtre change de taille
+    window.addEventListener('resize', chargerFavoris);
+</script>
 
 </body>
 </html>
