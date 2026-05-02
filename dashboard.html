@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        :root {
+            --s: min(20vw, 350px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .grille {
+            display: grid;
+            --hex-w: var(--s);
+            --hex-h: calc(var(--s) * 1.1547);
+            --gap: 6px;
+            grid-template-columns: repeat(5, var(--hex-w));
+            grid-template-rows: repeat(5, calc(var(--hex-h) * 0.75));
+            gap: var(--gap);
+            column-gap: var(--gap);
+        }
+
+        .hex {
+            width: var(--hex-w);
+            height: var(--hex-h);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            color: white;
+            font-size: calc(var(--s) * 0.08);
+            font-weight: bold;
+            text-align: center;
+            padding: 20%;
+        }
+
+        .hex:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .rss       { background: #f3912b; }
+        .favoris   { background: #53a4db; }
+        .horloge   { background: #7fbc48; }
+        .chlorofil { background: #a6539b; }
+
+        /* ===== PLACEMENT MANUEL DE CHAQUE HEXAGONE ===== */
+
+        /* Rangée 1 : 3 hexagones centrés sur colonnes 2,3,4 */
+        .r1h1 { grid-column: 2; grid-row: 1; }
+        .r1h2 { grid-column: 3; grid-row: 1; }
+        .r1h3 { grid-column: 4; grid-row: 1; }
+
+        /* Rangée 2 : 4 hexagones, décalés d'un demi */
+        .r2h1 { grid-column: 1; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r2h2 { grid-column: 2; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r2h3 { grid-column: 3; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r2h4 { grid-column: 4; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+
+        /* Rangée 3 : 5 hexagones */
+        .r3h1 { grid-column: 1; grid-row: 3; }
+        .r3h2 { grid-column: 2; grid-row: 3; }
+        .r3h3 { grid-column: 3; grid-row: 3; }
+        .r3h4 { grid-column: 4; grid-row: 3; }
+        .r3h5 { grid-column: 5; grid-row: 3; }
+
+        /* Rangée 4 : 4 hexagones, décalés d'un demi */
+        .r4h1 { grid-column: 1; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r4h2 { grid-column: 2; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r4h3 { grid-column: 3; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r4h4 { grid-column: 4; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+
+        /* Rangée 5 : 5 hexagones */
+        .r5h1 { grid-column: 1; grid-row: 5; }
+        .r5h2 { grid-column: 2; grid-row: 5; }
+        .r5h3 { grid-column: 3; grid-row: 5; }
+        .r5h4 { grid-column: 4; grid-row: 5; }
+        .r5h5 { grid-column: 5; grid-row: 5; }
+
+        @media (max-width: 1200px) { :root { --s: 140px; } }
+        @media (max-width: 900px)  { :root { --s: 110px; } }
+        @media (max-width: 600px)  { :root { --s: 80px;  } }
+    </style>
+</head>
+<body>
+
+<div class="grille">
+
+    <!-- Rangée 1 -->
+    <div class="hex rss r1h1">RSS</div>
+    <div class="hex rss r1h2">RSS</div>
+    <div class="hex rss r1h3">RSS</div>
+
+    <!-- Rangée 2 -->
+    <div class="hex rss     r2h1">RSS</div>
+    <div class="hex favoris r2h2">FAV</div>
+    <div class="hex favoris r2h3">FAV</div>
+    <div class="hex rss     r2h4">RSS</div>
+
+    <!-- Rangée 3 -->
+    <div class="hex rss     r3h1">RSS</div>
+    <div class="hex favoris r3h2">FAV</div>
+    <div class="hex horloge r3h3">⏰</div>
+    <div class="hex favoris r3h4">FAV</div>
+    <div class="hex rss     r3h5">RSS</div>
+
+    <!-- Rangée 4 -->
+    <div class="hex rss     r4h1">RSS</div>
+    <div class="hex favoris r4h2">FAV</div>
+    <div class="hex favoris r4h3">FAV</div>
+    <div class="hex rss     r4h4">RSS</div>
+
+    <!-- Rangée 5 -->
+    <div class="hex chlorofil r5h1">📰</div>
+    <div class="hex chlorofil r5h2">📰</div>
+    <div class="hex chlorofil r5h3">📰</div>
+    <div class="hex chlorofil r5h4">📰</div>
+    <div class="hex chlorofil r5h5">📰</div>
+
+</div>
+
+</body>
+</html>

@@ -1,42 +1,89 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4/dist/full.min.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Dashboard</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Notre CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen bg-base-200 p-4">
+<body>
+    <div class="hex-grid">
 
-  <div class="grid gap-4" id="grid-principal">
+        <!-- Rangée 1 -->
+        <div class="hex-row">
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-home"></i>
+                    <span>Accueil</span>
+                </div>
+            </div>
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </div>
+            </div>
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-cog"></i>
+                    <span>Paramètres</span>
+                </div>
+            </div>
+        </div>
 
-    <!-- Date/Heure : injecté dynamiquement avec les zones -->
-    <div class="card bg-base-100 shadow-md" id="bloc-datetime">
-      <div class="card-body items-center text-center p-4">
-        <span class="text-5xl font-bold tabular-nums" id="heure"></span>
-        <span class="text-base mt-1" id="date"></span>
-        <div class="badge badge-primary text-base px-4 py-3 mt-2" id="semaine"></div>
-      </div>
+        <!-- Rangée 2 — décalée -->
+        <div class="hex-row hex-row--offset">
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Stats</span>
+                </div>
+            </div>
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                </div>
+            </div>
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-bell"></i>
+                    <span>Alertes</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rangée 3 -->
+        <div class="hex-row">
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-calendar"></i>
+                    <span>Agenda</span>
+                </div>
+            </div>
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-map"></i>
+                    <span>Carte</span>
+                </div>
+            </div>
+            <div class="hex">
+                <div class="hex-inner">
+                    <i class="fas fa-file"></i>
+                    <span>Fichiers</span>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Les blocs de zones sont injectés ici par JS -->
-
-    <!-- Chlorofil : pleine largeur, toujours en dernier -->
-    <div class="card bg-base-100 shadow-md" id="bloc-chlorofil">
-      <div class="card-body p-4">
-        <h2 class="card-title text-base mb-2">Actualités Chlorofil</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="chlorofil"></div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Flux RSS : injectés dynamiquement par JS -->
-    <div id="blocs-rss"></div>
-
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

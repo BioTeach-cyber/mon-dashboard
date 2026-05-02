@@ -1,8 +1,8 @@
 {
   "flux": [
-    { "position": "haut-gauche",  "nom": "National Géographic",  "url": "https://www.nationalgeographic.fr/api/rss/latest_contents.xml" },
-    { "position": "haut-droit",   "nom": "",  "url": "" },
-    { "position": "bas-gauche",   "nom": "",  "url": "" },
-    { "position": "bas-droit",    "nom": "",  "url": "" }
+    {"nom": "National Géographic",  "url": "https://www.nationalgeographic.fr/api/rss/latest_contents.xml" },
+    {"nom": "",  "url": "" },
+    {"nom": "",  "url": "" },
+    {"nom": "",  "url": "" }
   ]
 }

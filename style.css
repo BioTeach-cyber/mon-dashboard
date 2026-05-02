@@ -1,302 +1,101 @@
-/* ─── GÉNÉRAL ─────────────────────────────────────────────── */
+/* ===== PALETTE DE COULEURS ===== */
+:root {
+    --bleu:    #53a4db;
+    --vert:    #7fbc48;
+    --violet:  #a6539b;
+    --orange:  #f3912b;
+    --gris:    #b7b7b7;
+    --rouge:   #e62d32;
+    --rose:    #e7708c;
+    --jaune:   #f4d32e;
+    --marron:  #a5706c;
+    --noir:    #494949;
+    --blanc:   #ffffff;
+
+}
+
+/* ===== RESET & BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-  font-family: 'Segoe UI', sans-serif;
+    background-color: var(--blanc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
 }
 
-/* ─── LAYOUT PRINCIPAL ────────────────────────────────────── */
-
-#grid-principal {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 1rem;
-  padding: 1rem;
+/* ===== GRILLE ===== */
+.hex-grid {
+    display: flex;
+    flex-direction: column;  /* Les rangées s'empilent verticalement */
+    align-items: center;
+    gap: 0;                  /* On gère l'espacement manuellement */
 }
 
-@media (max-width: 768px) {
-  #grid-principal {
-    grid-template-columns: 1fr;
-    padding: 0.5rem;
-    gap: 0.75rem;
-  }
+/* ===== RANGÉE ===== */
+.hex-row {
+    display: flex;
+    flex-direction: row;     /* Les hexagones s'alignent horizontalement */
+    gap: 10px;                /* Espace horizontal entre hexagones */
 }
 
-/* ─── FAVORIS ─────────────────────────────────────────────── */
-
-#bloc-favoris {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-content: flex-start;
+/* ===== RANGÉE DÉCALÉE ===== */
+.hex-row--offset {
+    margin-left: 160px;       /* La moitié d'un hexagone (150px / 2 + gap) */
+    margin-top: -30px;       /* Remonte pour coller les rangées */
 }
 
-@media (max-width: 768px) {
-  #bloc-favoris {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-  }
+/* ===== CORRECTION RANGÉE NORMALE ===== */
+.hex-row + .hex-row:not(.hex-row--offset) {
+    margin-top: -30px;       /* La rangée 3 remonte aussi */
 }
 
-@media (max-width: 480px) {
-  #bloc-favoris {
-    grid-template-columns: repeat(4, 1fr);
-  }
+/* ===== HEXAGONE ===== */
+.hex {
+    width: 150px;
+    height: 150px;
+    background-color: var(--bleu);
+    clip-path: polygon(
+        50% 0%,
+        100% 25%,
+        100% 75%,
+        50% 100%,
+        0% 75%,
+        0% 25%
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.favori-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  font-size: 0.7rem;
-  width: 68px;
-  padding: 6px 4px;
-  text-align: center;
-  white-space: normal;
-  line-height: 1.2;
-  overflow: hidden;
-  word-break: break-word;
-  height: 72px;
-  justify-content: flex-start;
-  border-radius: 12px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
+.hex:hover {
+    background-color: var(--noir);
 }
 
-@media (max-width: 768px) {
-  .favori-btn {
-    width: 100%;
-    height: auto;
-    min-height: 64px;
-    padding: 8px 4px;
-  }
+/* ===== CONTENU INTÉRIEUR ===== */
+.hex-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--blanc);
 }
 
-.favori-btn:hover {
-  background: oklch(var(--b2));
+.hex-inner i {
+    font-size: 2rem;
+    color: var(--blanc);
 }
 
-.favori-btn:active {
-  background: oklch(var(--b3));
-}
-
-.favori-btn span {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  width: 100%;
-}
-
-.favori-btn img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-  .favori-btn img {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-/* ─── DATE / HEURE ────────────────────────────────────────── */
-
-#bloc-datetime {
-  text-align: center;
-}
-
-#heure {
-  font-size: 3rem;
-  font-weight: bold;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.05em;
-}
-
-#date {
-  font-size: 1rem;
-  opacity: 0.75;
-}
-
-#semaine {
-  margin-top: 0.5rem;
-}
-
-@media (max-width: 768px) {
-  #heure {
-    font-size: 2.2rem;
-  }
-
-  #date {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  #heure {
-    font-size: 1.8rem;
-  }
-
-  #date {
-    font-size: 0.8rem;
-  }
-}
-
-/* ─── CHLOROFIL ───────────────────────────────────────────── */
-
-#chlorofil {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-}
-
-@media (max-width: 1024px) {
-  #chlorofil {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  #chlorofil {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  #chlorofil {
-    grid-template-columns: 1fr;
-  }
-}
-
-#chlorofil .card figure img {
-  width: 100%;
-  height: 8rem;
-  object-fit: cover;
-}
-
-@media (max-width: 480px) {
-  #chlorofil .card figure img {
-    height: 6rem;
-  }
-}
-
-#chlorofil .card .card-body {
-  padding: 0.75rem;
-}
-
-#chlorofil .card h3 {
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-#chlorofil .card p.description {
-  font-size: 0.75rem;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  opacity: 0.75;
-}
-
-#chlorofil .card p.date-article {
-  font-size: 0.7rem;
-  opacity: 0.55;
-  margin-bottom: 0.25rem;
-}
-
-/* ─── FLUX RSS ────────────────────────────────────────────── */
-
-#blocs-rss {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-}
-
-@media (max-width: 768px) {
-  #blocs-rss {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-}
-
-#blocs-rss .card .card-body {
-  padding: 1rem;
-}
-
-#blocs-rss ul li {
-  font-size: 0.78rem;
-  border-bottom: 1px solid oklch(var(--b2));
-  padding-bottom: 0.35rem;
-}
-
-#blocs-rss ul li:last-child {
-  border-bottom: none;
-}
-
-#blocs-rss ul li a {
-  font-weight: 500;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.3;
-}
-
-#blocs-rss ul li span {
-  font-size: 0.68rem;
-  opacity: 0.55;
-  margin-top: 2px;
-  display: block;
-}
-
-/* ─── CARDS GÉNÉRALES ─────────────────────────────────────── */
-
-.card {
-  border-radius: 1rem;
-}
-
-.card-body {
-  padding: 1rem;
-}
-
-@media (max-width: 480px) {
-  .card {
-    border-radius: 0.75rem;
-  }
-
-  .card-body {
-    padding: 0.75rem;
-  }
-}
-
-/* ─── SCROLLBAR DISCRÈTE ──────────────────────────────────── */
-
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: oklch(var(--b3));
-  border-radius: 99px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: oklch(var(--bc) / 0.3);
+.hex-inner span {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }

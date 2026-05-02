@@ -6,7 +6,7 @@ from datetime import datetime
 # ---- Configuration ----
 URL = "https://chlorofil.fr/actualites"
 BASE_URL = "https://chlorofil.fr"
-OUTPUT_FILE = "chlorofil.json"
+OUTPUT_FILE = "data/chlorofil.json"
 
 # ---- Récupération de la page ----
 def get_page(url):
