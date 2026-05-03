@@ -12,7 +12,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #1a1a2e;
+            background: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -135,96 +135,225 @@
         @media (max-width: 600px)  { :root { --s: 80px;  } }
 
         /* === FAVORIS === */
-.hex.favoris {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;  /* était center */
-  padding-top: 15%;              /* pousse le contenu vers le haut de l'hexagone */
-  gap: 4px;
-}
+        .hex.favoris {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 15%;
+            gap: 4px;
+        }
 
         .fav-nom-groupe {
-          font-size: 0.7rem;
-          font-weight: bold;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          color: white;
-          text-align: center;
-          margin-bottom: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            text-align: center;
+            margin-bottom: 4px;
         }
 
         .fav-grille {
-          display: grid;
-          gap: 6px;
-          justify-items: center;
-          align-items: center;
-          padding: 0 10px;
+            display: grid;
+            gap: 6px;
+            justify-items: center;
+            align-items: center;
+            padding: 0 10px;
         }
 
         .fav-grille a img {
-          border-radius: 8px;
-          transition: transform 0.2s;
-          object-fit: contain;
+            border-radius: 8px;
+            transition: transform 0.2s;
+            object-fit: contain;
         }
 
         .fav-grille a:hover img {
-          transform: scale(1.15);
+            transform: scale(1.15);
         }
 
         /* ===== CONTENU CHLOROFIL ===== */
-    .hex.chlorofil {
-      position: relative;
-      overflow: hidden;
-    }
+        .hex.chlorofil {
+            position: relative;
+            overflow: hidden;
+        }
 
-    .chlorofil-link {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      text-decoration: none;
-    }
+        .chlorofil-link {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+        }
 
-    .chlorofil-overlay {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 10px;
-      width: 100%;
-      height: 90%;
-      background: linear-gradient(to top, rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.1) 100%);
-      box-sizing: border-box;
-      align-self: center;
-    }
+        .chlorofil-overlay {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px;
+            width: 100%;
+            height: 90%;
+            background: linear-gradient(to top, rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.1) 100%);
+            box-sizing: border-box;
+            align-self: center;
+        }
 
-    .chlorofil-date {
-      font-size: clamp(0.1rem, 0.8vw, 0.65rem);
-      color: #ccc;
-      margin: 0 0 3px 0;
-    }
+        .chlorofil-date {
+            font-size: clamp(0.1rem, 0.8vw, 0.65rem);
+            color: #ccc;
+            margin: 0 0 3px 0;
+        }
 
-    .chlorofil-titre {
-      font-size: clamp(0.2rem, 1vw, 0.75rem);
-      font-weight: bold;
-      color: white;
-      margin: 0 0 4px 0;
-      line-height: 1.2;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
+        .chlorofil-titre {
+            font-size: clamp(0.2rem, 1vw, 0.75rem);
+            font-weight: bold;
+            color: white;
+            margin: 0 0 4px 0;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
-    .chlorofil-desc {
-      font-size: clamp(0.1rem, 0.8vw, 0.65rem);
-      color: #ddd;
-      margin: 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
+        .chlorofil-desc {
+            font-size: clamp(0.1rem, 0.8vw, 0.65rem);
+            color: #ddd;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
+        /* ===== RSS ===== */
+        .rss {
+            background: #f3912b;
+            position: relative;
+            overflow: hidden; /* important pour le clip-path */
+        }
+
+        /* Overlay sombre pour lisibilité */
+        .rss::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 0;
+        }
+
+        /* Le contenu passe au-dessus de l'overlay */
+        .rss > * {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .hex.rss {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 18% 10% 10% 10%;
+            gap: 4px;
+            overflow: hidden;
+        }
+
+        .rss-nom {
+            font-size: calc(var(--s) * 0.06);
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            width: 80%;
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            word-break: break-word;
+        }
+
+        .rss-carrousel {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .rss-prev, .rss-next {
+            background: none;
+            border: none;
+            color: #fff3e0;
+            font-size: clamp(0.8rem, 1.5vw, 1.3rem);
+            cursor: pointer;
+            padding: 0 1px;
+            flex-shrink: 0;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            line-height: 1;
+        }
+
+        .rss-prev:hover, .rss-next:hover {
+            opacity: 1;
+        }
+
+        .rss-articles {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .rss-article {
+            display: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        .rss-article.active {
+            display: block;
+        }
+
+        .rss-article a {
+            color: #ffffff;
+            font-size: calc(var(--s) * 0.07);  /* était 0.6rem, maintenant relatif à la taille de l'hexagone */
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);  /* ombre pour lisibilité sur les images */
+            text-decoration: none;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-align: center;
+        }
+
+
+        .rss-article a:hover {
+            color: #ffe0b2;
+            text-decoration: underline;
+        }
+
+        .rss-compteur {
+            font-size: clamp(0.25rem, 0.6vw, 0.5rem);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .rss-erreur {
+            font-size: clamp(0.3rem, 0.7vw, 0.55rem);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -232,18 +361,71 @@
 <div class="grille">
 
     <!-- Rangée 1 -->
-    <div class="hex rss r1h1">RSS</div>
-    <div class="hex rss r1h2">RSS</div>
-    <div class="hex rss r1h3">RSS</div>
+    <div class="hex rss r1h1" data-flux-index="0">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <div class="hex rss r1h2" data-flux-index="1">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <div class="hex rss r1h3" data-flux-index="2">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
 
     <!-- Rangée 2 -->
-    <div class="hex rss     r2h1">RSS</div>
+    <div class="hex rss r2h1" data-flux-index="3">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
     <div class="hex favoris r2h2">FAV</div>
     <div class="hex favoris r2h3">FAV</div>
-    <div class="hex rss     r2h4">RSS</div>
+
+    <div class="hex rss r2h4" data-flux-index="4">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
 
     <!-- Rangée 3 -->
-    <div class="hex rss     r3h1">RSS</div>
+    <div class="hex rss r3h1" data-flux-index="5">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
     <div class="hex favoris r3h2">FAV</div>
 
     <!-- Horloge centrale -->
@@ -257,13 +439,40 @@
     </div>
 
     <div class="hex favoris r3h4">FAV</div>
-    <div class="hex rss     r3h5">RSS</div>
+
+    <div class="hex rss r3h5" data-flux-index="6">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
 
     <!-- Rangée 4 -->
-    <div class="hex rss     r4h1">RSS</div>
+    <div class="hex rss r4h1" data-flux-index="7">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
     <div class="hex favoris r4h2">FAV</div>
     <div class="hex favoris r4h3">FAV</div>
-    <div class="hex rss     r4h4">RSS</div>
+
+    <div class="hex rss r4h4" data-flux-index="8">
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
 
     <!-- Rangée 5 -->
     <div class="hex chlorofil r5h1">📰</div>
@@ -276,12 +485,9 @@
 
 <script>
     // ===== SEMAINE A ou B =====
-    // Règle : la semaine contenant le 1er septembre = semaine A
-    // On alterne ensuite chaque semaine scolaire
-
     function getLundiDeLaSemaine(date) {
         const d = new Date(date);
-        const jour = d.getDay() || 7; // lundi=1 ... dimanche=7
+        const jour = d.getDay() || 7;
         d.setDate(d.getDate() - jour + 1);
         d.setHours(0, 0, 0, 0);
         return d;
@@ -289,39 +495,25 @@
 
     function getSemaineAB(date) {
         const annee = date.getFullYear();
-
-        // On cherche le 1er septembre de l'année scolaire en cours
-        // Si on est avant le 1er septembre, l'année scolaire a commencé en septembre de l'année précédente
-        const mois = date.getMonth(); // 0=jan ... 8=sep
+        const mois = date.getMonth();
         const anneeScolaire = mois >= 8 ? annee : annee - 1;
-
-        const ref = new Date(anneeScolaire, 8, 1); // 1er septembre
+        const ref = new Date(anneeScolaire, 8, 1);
         const lundiRef = getLundiDeLaSemaine(ref);
         const lundiAujourdhui = getLundiDeLaSemaine(date);
-
-        // Nombre de semaines écoulées depuis la semaine de référence
         const diffMs = lundiAujourdhui - lundiRef;
         const diffSemaines = Math.round(diffMs / (7 * 24 * 60 * 60 * 1000));
-
-        // Semaine 0 = A, semaine 1 = B, semaine 2 = A ...
         return diffSemaines % 2 === 0 ? 'A' : 'B';
     }
 
     function mettreAJour() {
         const now = new Date();
-
-        // Heure
         const hh = String(now.getHours()).padStart(2, '0');
         const mm = String(now.getMinutes()).padStart(2, '0');
         const ss = String(now.getSeconds()).padStart(2, '0');
         document.getElementById('heure').textContent = `${hh}:${mm}:${ss}`;
-
-        // Date
         const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
         const dateStr = now.toLocaleDateString('fr-FR', options);
         document.getElementById('date').textContent = dateStr;
-
-        // Semaine A ou B
         const semaine = getSemaineAB(now);
         document.getElementById('lettre-a').classList.toggle('actif', semaine === 'A');
         document.getElementById('lettre-b').classList.toggle('actif', semaine === 'B');
@@ -330,96 +522,204 @@
     mettreAJour();
     setInterval(mettreAJour, 1000);
 
-    // === CHARGEMENT DES FAVORIS ===
+    // ===== FAVORIS =====
     async function chargerFavoris() {
-        
-      const response = await fetch('data/favoris.json');
-      const data = await response.json();
-
-      const hexFavoris = document.querySelectorAll('.hex.favoris');
-
-      hexFavoris.forEach((hex, index) => {
-        const zone = data.zones[index];
-        if (!zone) return;
-
-        const nb = zone.favoris.length;
-
-        // Taille de l'hexagone réel
-        const hexWidth = hex.offsetWidth;
-
-        let colonnes;
-        if (nb <= 4) colonnes = 2;
-        else if (nb <= 6) colonnes = 3;
-        else colonnes = 3;
-
-        // Taille calculée selon la largeur disponible
-        const taille = Math.floor((hexWidth * 0.55) / colonnes);
-
-        // Taille de police calculée selon la largeur de l'hexagone
-        const taillePoliceNom = Math.floor(hexWidth * 0.07);
-
-        hex.innerHTML = `
-          <div class="fav-nom-groupe" style="font-size: ${taillePoliceNom}px;">${zone.nom}</div>
-          <div class="fav-grille" style="grid-template-columns: repeat(${colonnes}, ${taille}px);">
-            ${zone.favoris.map(f => `
-              <a href="${f.url}" target="_blank" title="${f.nom}">
-                <img src="${f.icone}" alt="${f.nom}" width="${taille}" height="${taille}">
-              </a>
-            `).join('')}
-          </div>
-        `;
-      });
+        const response = await fetch('data/favoris.json');
+        const data = await response.json();
+        const hexFavoris = document.querySelectorAll('.hex.favoris');
+        hexFavoris.forEach((hex, index) => {
+            const zone = data.zones[index];
+            if (!zone) return;
+            const nb = zone.favoris.length;
+            const hexWidth = hex.offsetWidth;
+            let colonnes;
+            if (nb <= 4) colonnes = 2;
+            else if (nb <= 6) colonnes = 3;
+            else colonnes = 3;
+            const taille = Math.floor((hexWidth * 0.55) / colonnes);
+            const taillePoliceNom = Math.floor(hexWidth * 0.07);
+            hex.innerHTML = `
+              <div class="fav-nom-groupe" style="font-size: ${taillePoliceNom}px;">${zone.nom}</div>
+              <div class="fav-grille" style="grid-template-columns: repeat(${colonnes}, ${taille}px);">
+                ${zone.favoris.map(f => `
+                  <a href="${f.url}" target="_blank" title="${f.nom}">
+                    <img src="${f.icone}" alt="${f.nom}" width="${taille}" height="${taille}">
+                  </a>
+                `).join('')}
+              </div>
+            `;
+        });
     }
 
+    // ===== CHLOROFIL =====
     async function chargerChlorofil() {
-      try {
-        const response = await fetch('data/chlorofil.json');
-        const articles = await response.json();
+        try {
+            const response = await fetch('data/chlorofil.json');
+            const articles = await response.json();
+            articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const hexChlorofil = document.querySelectorAll('.hex.chlorofil');
+            hexChlorofil.forEach((hex, index) => {
+                const article = articles[index];
+                if (!article) return;
+                const date = new Date(article.date);
+                const dateFormatee = date.toLocaleDateString('fr-FR', {
+                    day: '2-digit', month: 'long', year: 'numeric'
+                });
+                hex.style.backgroundImage = `url('${article.image}')`;
+                hex.style.backgroundSize = 'cover';
+                hex.style.backgroundPosition = 'center';
+                hex.innerHTML = `
+                  <a href="${article.lien}" target="_blank" class="chlorofil-link">
+                    <div class="chlorofil-overlay">
+                      <p class="chlorofil-date">${dateFormatee}</p>
+                      <p class="chlorofil-titre">${article.titre}</p>
+                      <p class="chlorofil-desc">${article.description}</p>
+                    </div>
+                  </a>
+                `;
+            });
+        } catch (error) {
+            console.error('Erreur chargement Chlorofil :', error);
+        }
+    }
 
-        // Tri par date décroissante
-        articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // ===== RSS =====
 
-        const hexChlorofil = document.querySelectorAll('.hex.chlorofil');
+    async function chargerFluxRSS(hexElement, fluxUrl, fluxNom) {
+    const nomEl = hexElement.querySelector('.rss-nom');
+    if (nomEl) nomEl.textContent = fluxNom;
 
-        hexChlorofil.forEach((hex, index) => {
-          const article = articles[index];
-          if (!article) return;
+    const articlesContainer = hexElement.querySelector('.rss-articles');
+    const compteur = hexElement.querySelector('.rss-compteur');
 
-          // Formater la date en français
-          const date = new Date(article.date);
-          const dateFormatee = date.toLocaleDateString('fr-FR', {
-            day: '2-digit', month: 'long', year: 'numeric'
-          });
+    try {
+        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(fluxUrl);
+        const response = await fetch(proxyUrl);
+        const texte = await response.text();
 
-          // Image en fond
-          hex.style.backgroundImage = `url('${article.image}')`;
-          hex.style.backgroundSize = 'cover';
-          hex.style.backgroundPosition = 'center';
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(texte, 'text/xml');
+        const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
 
-          // Contenu
-          hex.innerHTML = `
-            <a href="${article.lien}" target="_blank" class="chlorofil-link">
-              <div class="chlorofil-overlay">
-                <p class="chlorofil-date">${dateFormatee}</p>
-                <p class="chlorofil-titre">${article.titre}</p>
-                <p class="chlorofil-desc">${article.description}</p>
-              </div>
-            </a>
-          `;
+        if (items.length === 0) {
+            articlesContainer.innerHTML = '<div class="rss-article active"><span class="rss-erreur">Aucun article</span></div>';
+            if (compteur) compteur.textContent = '0 / 0';
+            return;
+        }
+
+        const articles = items.map(item => {
+            // Cherche l'image dans plusieurs endroits possibles
+            let image = null;
+
+            const mediaContent = item.querySelector('content');
+            const mediaThumbnail = item.querySelector('thumbnail');
+            const enclosure = item.querySelector('enclosure');
+
+            if (mediaThumbnail?.getAttribute('url')) {
+                image = mediaThumbnail.getAttribute('url');
+            } else if (mediaContent?.getAttribute('url')) {
+                image = mediaContent.getAttribute('url');
+            } else if (enclosure?.getAttribute('url') && enclosure.getAttribute('type')?.startsWith('image')) {
+                image = enclosure.getAttribute('url');
+            }
+
+            return {
+                titre: item.querySelector('title')?.textContent?.trim() || 'Sans titre',
+                lien:  item.querySelector('link')?.textContent?.trim() || '#',
+                image: image
+            };
         });
 
-      } catch (error) {
-        console.error('Erreur chargement Chlorofil :', error);
-      }
+        initCarrousel(hexElement, articles);
+
+    } catch (error) {
+        console.warn(`Erreur RSS (${fluxNom}):`, error);
+        articlesContainer.innerHTML = '<div class="rss-article active"><span class="rss-erreur">Flux indisponible</span></div>';
+        if (compteur) compteur.textContent = '-';
+    }
+}
+
+function initCarrousel(hexElement, articles) {
+    const articlesContainer = hexElement.querySelector('.rss-articles');
+    const compteur = hexElement.querySelector('.rss-compteur');
+    let current = 0;
+    let timer = null;
+
+    // Injection des articles
+    articlesContainer.innerHTML = '';
+    articles.forEach((art, i) => {
+        const div = document.createElement('div');
+        div.className = 'rss-article' + (i === 0 ? ' active' : '');
+        div.innerHTML = `<a href="${art.lien}" target="_blank">${art.titre}</a>`;
+        if (art.image) div.dataset.image = art.image;
+        articlesContainer.appendChild(div);
+    });
+
+    const tous = articlesContainer.querySelectorAll('.rss-article');
+
+    function afficher(index) {
+        tous.forEach(a => a.classList.remove('active'));
+        tous[index].classList.add('active');
+        current = index;
+        if (compteur) compteur.textContent = `${current + 1} / ${tous.length}`;
+
+        // Changement du fond de l'hexagone
+        const img = tous[index].dataset.image;
+        if (img) {
+            hexElement.style.backgroundImage = `url('${img}')`;
+            hexElement.style.backgroundSize = 'cover';
+            hexElement.style.backgroundPosition = 'center';
+        } else {
+            hexElement.style.backgroundImage = '';
+        }
     }
 
-    chargerChlorofil();
+    function suivant() { afficher((current + 1) % tous.length); }
+    function precedent() { afficher((current - 1 + tous.length) % tous.length); }
+
+    function demarrerAuto() {
+        stopperAuto();
+        timer = setInterval(suivant, 5000);
+    }
+    function stopperAuto() {
+        if (timer) clearInterval(timer);
+    }
+
+    hexElement.querySelector('.rss-prev').addEventListener('click', () => { precedent(); demarrerAuto(); });
+    hexElement.querySelector('.rss-next').addEventListener('click', () => { suivant(); demarrerAuto(); });
+    hexElement.addEventListener('mouseenter', stopperAuto);
+    hexElement.addEventListener('mouseleave', demarrerAuto);
+
+    afficher(0);
+    demarrerAuto();
+}
 
 
-    // Appel initial
-    chargerFavoris();
-    
-    // Recalcul si la fenêtre change de taille
+    async function chargerTousLesFlux() {
+        try {
+            const response = await fetch('data/flux-rss.json');
+            const data = await response.json();
+
+            data.flux.forEach((flux, index) => {
+                if (!flux.url) return;
+                const hexElement = document.querySelector(`.hex.rss[data-flux-index="${index}"]`);
+                if (hexElement) {
+                    chargerFluxRSS(hexElement, flux.url, flux.nom);
+                }
+            });
+
+        } catch (error) {
+            console.error('Erreur chargement flux-rss.json :', error);
+        }
+    }
+
+    // ===== LANCEMENT =====
+    document.addEventListener('DOMContentLoaded', () => {
+        chargerFavoris();
+        chargerChlorofil();
+        chargerTousLesFlux();
+    });
+
     window.addEventListener('resize', chargerFavoris);
 </script>
 

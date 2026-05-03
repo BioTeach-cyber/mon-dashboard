@@ -3,87 +3,873 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Dashboard</title>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" 
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-    <!-- Notre CSS -->
-    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
+    <style>
+        :root {
+            --s: min(20vw, 340px);
+            --epaisseur-contour: 4px;
+            /* Palette */
+            --bleu: #53a4db;
+            --vert: #7fbc48;
+            --violet: #a6539b;
+            --orange: #f3912b;
+            --gris: #b7b7b7;
+            --rouge: #e62d32;
+            --rose: #ee7bab;
+            --jaune: #f4d32e;
+            --marron: #a5706c;
+            --noir: #494949;
+            --fond: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .grille {
+            display: grid;
+            --hex-w: var(--s);
+            --hex-h: calc(var(--s) * 1.1547);
+            --gap: 6px;
+            grid-template-columns: repeat(5, var(--hex-w));
+            grid-template-rows: repeat(5, calc(var(--hex-h) * 0.75));
+            gap: var(--gap);
+            column-gap: var(--gap);
+        }
+
+        /* ===== HEXAGONE BASE ===== */
+        .hex {
+            width: var(--hex-w);
+            height: var(--hex-h);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            font-size: calc(var(--s) * 0.08);
+            font-weight: bold;
+            text-align: center;
+            padding: 20%;
+            position: relative; /* nécessaire pour le pseudo-élément contour */
+        }
+
+        /*
+         * Technique contour hexagonal :
+         * ::before = hexagone coloré (contour), légèrement plus grand
+         * ::after  = hexagone blanc (fond intérieur), taille normale
+         * Le contenu est au-dessus via z-index
+         */
+
+        /* Calque contour (couleur) */
+        .hex::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            z-index: 0;
+            /* La couleur est définie par classe ci-dessous */
+        }
+
+        /* Calque fond blanc intérieur (légèrement réduit pour laisser apparaître le contour) */
+        .hex::after {
+            content: '';
+            position: absolute;
+            inset: var(--epaisseur-contour);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: var(--fond);
+            z-index: 1;
+        }
+
+        /* Tout le contenu passe devant les pseudo-éléments */
+        .hex > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hex:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* ===== COULEURS DE CONTOUR PAR TYPE ===== */
+        .rss::before       { background: var(--orange); }
+        .favoris::before   { background: var(--bleu);   }
+        .horloge::before   { background: var(--vert);   }
+        .chlorofil::before { background: var(--violet); }
+
+        /* ===== COULEUR DU TEXTE PAR TYPE (remplace color: white) ===== */
+        .rss       { color: var(--noir); }
+        .favoris   { color: var(--noir); }
+        .horloge   { color: var(--noir); }
+        .chlorofil { color: var(--noir); }
+
+        /* ===== HORLOGE ===== */
+        .horloge-heure {
+            font-size: calc(var(--s) * 0.18);
+            font-weight: bold;
+            line-height: 1;
+            letter-spacing: 1px;
+            color: var(--vert);
+        }
+
+        .horloge-date {
+            font-size: calc(var(--s) * 0.07);
+            font-weight: normal;
+            margin-top: calc(var(--s) * 0.03);
+            line-height: 1.3;
+            text-transform: capitalize;
+            color: var(--noir);
+        }
+
+        /* ===== TOGGLE SEMAINE A/B ===== */
+        .toggle-semaine {
+            display: flex;
+            gap: calc(var(--s) * 0.04);
+            margin-top: calc(var(--s) * 0.04);
+            background: rgba(127, 188, 72, 0.2);
+            border-radius: 999px;
+            padding: calc(var(--s) * 0.02);
+        }
+
+        .toggle-lettre {
+            font-size: calc(var(--s) * 0.12);
+            font-weight: bold;
+            width:  calc(var(--s) * 0.22);
+            height: calc(var(--s) * 0.22);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gris);
+            background: transparent;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        .toggle-lettre.actif {
+            background: var(--vert);
+            color: white;
+        }
+
+        /* ===== PLACEMENT ===== */
+        .r1h1 { grid-column: 2; grid-row: 1; }
+        .r1h2 { grid-column: 3; grid-row: 1; }
+        .r1h3 { grid-column: 4; grid-row: 1; }
+
+        .r2h1 { grid-column: 1; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r2h2 { grid-column: 2; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r2h3 { grid-column: 3; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r2h4 { grid-column: 4; grid-row: 2; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+
+        .r3h1 { grid-column: 1; grid-row: 3; }
+        .r3h2 { grid-column: 2; grid-row: 3; }
+        .r3h3 { grid-column: 3; grid-row: 3; }
+        .r3h4 { grid-column: 4; grid-row: 3; }
+        .r3h5 { grid-column: 5; grid-row: 3; }
+
+        .r4h1 { grid-column: 1; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r4h2 { grid-column: 2; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r4h3 { grid-column: 3; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+        .r4h4 { grid-column: 4; grid-row: 4; margin-left: calc(var(--hex-w) * 0.5 + var(--gap) * 0.5); }
+
+        .r5h1 { grid-column: 1; grid-row: 5; }
+        .r5h2 { grid-column: 2; grid-row: 5; }
+        .r5h3 { grid-column: 3; grid-row: 5; }
+        .r5h4 { grid-column: 4; grid-row: 5; }
+        .r5h5 { grid-column: 5; grid-row: 5; }
+
+        @media (max-width: 1200px) { :root { --s: 140px; } }
+        @media (max-width: 900px)  { :root { --s: 110px; } }
+        @media (max-width: 600px)  { :root { --s: 80px;  } }
+
+        /* ===== FAVORIS ===== */
+        .hex.favoris {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 15%;
+            gap: 4px;
+        }
+
+        .fav-nom-groupe {
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--bleu);
+            text-align: center;
+            margin-top: 7px;
+            margin-bottom: 4px;
+        }
+
+        .fav-grille {
+            display: grid;
+            gap: 6px;
+            justify-items: center;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .fav-grille a img {
+            border-radius: 8px;
+            transition: transform 0.2s;
+            object-fit: contain;
+        }
+
+        .fav-grille a:hover img {
+            transform: scale(1.15);
+        }
+
+/* ===== CONTENU CHLOROFIL ===== */
+
+/*
+ * Pour Chlorofil : on ne peut pas cliper les enfants via ::after.
+ * On utilise un wrapper interne .chlorofil-inner qui reçoit
+ * le clip-path ET l'image de fond, laissant ::before visible
+ * comme contour par-dessus.
+ */
+.hex.chlorofil {
+    padding: 0;
+    overflow: visible;
+    position: relative;
+}
+
+/* On supprime l'image de fond sur ::after pour Chlorofil */
+.hex.chlorofil::after {
+    background-image: none !important;
+}
+
+/* Wrapper interne : contient image + overlay, clipé à la forme hexa */
+.hex.chlorofil > .chlorofil-inner {
+    position: absolute;
+    /* Couvre exactement le ::after (fond blanc intérieur) */
+    top: var(--epaisseur-contour);
+    left: var(--epaisseur-contour);
+    right: var(--epaisseur-contour);
+    bottom: var(--epaisseur-contour);
+    width: calc(100% - calc(var(--epaisseur-contour) * 2));
+    height: calc(100% - calc(var(--epaisseur-contour) * 2));
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: 2;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    opacity: 65%;
+}
+
+.chlorofil-link {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    position: relative;
+    z-index: 2;
+}
+
+/* L'overlay est ENFANT du .chlorofil-inner, donc il se positionne par rapport à lui */
+.chlorofil-inner .chlorofil-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* Padding important pour repousser le texte hors de la pointe basse étroite */
+    padding: 8% 12% 35% 12%;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0) 100%);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.chlorofil-date {
+    font-size: clamp(0.1rem, 1vw, 2rem);
+    color: var(--rose);
+    margin: 0 0 3px 0;
+}
+
+.chlorofil-titre {
+    font-size: clamp(0.2rem, 1.5vw, 2rem);
+    font-weight: bold;
+    color: white;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.chlorofil-desc {
+    font-size: clamp(0.1rem, 0.8vw, 1.5rem);
+    color: #ddd;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Neutralise la règle générique .hex > * qui force position: relative */
+.hex > *:not(.chlorofil-inner) {
+    position: relative;
+    z-index: 2;
+}
+
+        /* ===== RSS ===== */
+        .hex.rss {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 18% 10% 10% 10%;
+            gap: 4px;
+        }
+
+        /*
+         * Pour RSS avec image de fond : même technique que Chlorofil,
+         * on passe l'image via une variable CSS custom --bg-image.
+         */
+        .hex.rss::after {
+            background-image: var(--bg-image, none);
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Overlay sombre sur les images RSS pour lisibilité */
+        .hex.rss.has-image::after {
+            background-color: transparent;
+        }
+
+        /* Pseudo-élément overlay sombre quand image présente */
+        .hex.rss .rss-image-overlay {
+            position: absolute;
+            inset: var(--epaisseur-contour);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 2; /* au-dessus du ::after mais en-dessous du contenu */
+            pointer-events: none;
+            display: none; /* masqué par défaut, activé via JS quand image présente */
+        }
+
+        .hex.rss.has-image .rss-image-overlay {
+            display: block;
+        }
+
+        /* Texte RSS adapté selon présence ou non d'image */
+        .hex.rss .rss-nom,
+        .hex.rss .rss-article a,
+        .hex.rss .rss-compteur {
+            transition: color 0.3s;
+        }
+
+        .hex.rss.has-image .rss-nom {
+            color: #ffffff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .hex.rss.has-image .rss-article a {
+            color: #ffffff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .hex.rss.has-image .rss-compteur {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .rss-nom {
+            font-size: calc(var(--s) * 0.06);
+            font-weight: bold;
+            color: var(--orange);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            width: 80%;
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            word-break: break-word;
+        }
+
+        .rss-carrousel {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .rss-prev, .rss-next {
+            background: none;
+            border: none;
+            color: var(--orange);
+            font-size: clamp(0.8rem, 1.5vw, 1.3rem);
+            cursor: pointer;
+            padding: 0 1px;
+            flex-shrink: 0;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            line-height: 1;
+        }
+
+        .rss-prev:hover, .rss-next:hover {
+            opacity: 1;
+        }
+
+        .hex.rss.has-image .rss-prev,
+        .hex.rss.has-image .rss-next {
+            color: #ffffff;
+        }
+
+        .rss-articles {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .rss-article {
+            display: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        .rss-article.active {
+            display: block;
+        }
+
+        .rss-article a {
+            color: var(--noir);
+            font-size: calc(var(--s) * 0.07);
+            font-weight: bold;
+            text-decoration: none;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .rss-article a:hover {
+            color: var(--orange);
+            text-decoration: underline;
+        }
+
+        .rss-compteur {
+            font-size: clamp(0.25rem, 0.6vw, 0.5rem);
+            color: var(--gris);
+            text-align: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .rss-erreur {
+            font-size: clamp(0.3rem, 0.7vw, 0.55rem);
+            color: var(--gris);
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <div class="hex-grid">
 
-        <!-- Rangée 1 -->
-        <div class="hex-row">
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-home"></i>
-                    <span>Accueil</span>
-                </div>
-            </div>
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-user"></i>
-                    <span>Profil</span>
-                </div>
-            </div>
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-cog"></i>
-                    <span>Paramètres</span>
-                </div>
-            </div>
+<div class="grille">
+
+    <!-- Rangée 1 -->
+    <div class="hex rss r1h1" data-flux-index="0">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
         </div>
-
-        <!-- Rangée 2 — décalée -->
-        <div class="hex-row hex-row--offset">
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Stats</span>
-                </div>
-            </div>
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-envelope"></i>
-                    <span>Messages</span>
-                </div>
-            </div>
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-bell"></i>
-                    <span>Alertes</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rangée 3 -->
-        <div class="hex-row">
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-calendar"></i>
-                    <span>Agenda</span>
-                </div>
-            </div>
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-map"></i>
-                    <span>Carte</span>
-                </div>
-            </div>
-            <div class="hex">
-                <div class="hex-inner">
-                    <i class="fas fa-file"></i>
-                    <span>Fichiers</span>
-                </div>
-            </div>
-        </div>
-
+        <div class="rss-compteur">-/-</div>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <div class="hex rss r1h2" data-flux-index="1">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
 
+    <div class="hex rss r1h3" data-flux-index="2">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <!-- Rangée 2 -->
+    <div class="hex rss r2h1" data-flux-index="3">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <div class="hex favoris r2h2">FAV</div>
+    <div class="hex favoris r2h3">FAV</div>
+
+    <div class="hex rss r2h4" data-flux-index="4">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <!-- Rangée 3 -->
+    <div class="hex rss r3h1" data-flux-index="5">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <div class="hex favoris r3h2">FAV</div>
+
+    <!-- Horloge centrale -->
+    <div class="hex horloge r3h3">
+        <div class="horloge-heure" id="heure">00:00:00</div>
+        <div class="horloge-date"  id="date">--</div>
+        <div class="toggle-semaine">
+            <div class="toggle-lettre" id="lettre-a">A</div>
+            <div class="toggle-lettre" id="lettre-b">B</div>
+        </div>
+    </div>
+
+    <div class="hex favoris r3h4">FAV</div>
+
+    <div class="hex rss r3h5" data-flux-index="6">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <!-- Rangée 4 -->
+    <div class="hex rss r4h1" data-flux-index="7">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <div class="hex favoris r4h2">FAV</div>
+    <div class="hex favoris r4h3">FAV</div>
+
+    <div class="hex rss r4h4" data-flux-index="8">
+        <div class="rss-image-overlay"></div>
+        <div class="rss-nom">…</div>
+        <div class="rss-carrousel">
+            <button class="rss-prev">&#8249;</button>
+            <div class="rss-articles"><div class="rss-article active"><a href="#">Chargement…</a></div></div>
+            <button class="rss-next">&#8250;</button>
+        </div>
+        <div class="rss-compteur">-/-</div>
+    </div>
+
+    <!-- Rangée 5 -->
+    <div class="hex chlorofil r5h1">📰</div>
+    <div class="hex chlorofil r5h2">📰</div>
+    <div class="hex chlorofil r5h3">📰</div>
+    <div class="hex chlorofil r5h4">📰</div>
+    <div class="hex chlorofil r5h5">📰</div>
+
+</div>
+
+<script>
+"use strict";
+
+// ===== SEMAINE A ou B =====
+function getLundiDeLaSemaine(date) {
+    const d = new Date(date);
+    const jour = d.getDay() || 7;
+    d.setDate(d.getDate() - jour + 1);
+    d.setHours(0, 0, 0, 0);
+    return d;
+}
+
+function getSemaineAB(date) {
+    const annee = date.getFullYear();
+    const mois = date.getMonth();
+    const anneeScolaire = mois >= 8 ? annee : annee - 1;
+    const ref = new Date(anneeScolaire, 8, 1);
+    const lundiRef = getLundiDeLaSemaine(ref);
+    const lundiAujourdhui = getLundiDeLaSemaine(date);
+    const diffMs = lundiAujourdhui - lundiRef;
+    const diffSemaines = Math.round(diffMs / (7 * 24 * 60 * 60 * 1000));
+    return diffSemaines % 2 === 0 ? 'A' : 'B';
+}
+
+function mettreAJour() {
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('heure').textContent = `${hh}:${mm}:${ss}`;
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    const dateStr = now.toLocaleDateString('fr-FR', options);
+    document.getElementById('date').textContent = dateStr;
+    const semaine = getSemaineAB(now);
+    document.getElementById('lettre-a').classList.toggle('actif', semaine === 'A');
+    document.getElementById('lettre-b').classList.toggle('actif', semaine === 'B');
+}
+
+mettreAJour();
+setInterval(mettreAJour, 1000);
+
+// ===== FAVORIS =====
+async function chargerFavoris() {
+    const response = await fetch('data/favoris.json');
+    const data = await response.json();
+    const hexFavoris = document.querySelectorAll('.hex.favoris');
+    hexFavoris.forEach((hex, index) => {
+        const zone = data.zones[index];
+        if (!zone) return;
+        const nb = zone.favoris.length;
+        const hexWidth = hex.offsetWidth;
+        let colonnes;
+        if (nb <= 4) colonnes = 2;
+        else if (nb <= 6) colonnes = 3;
+        else colonnes = 3;
+        const taille = Math.floor((hexWidth * 0.40) / colonnes);
+        const taillePoliceNom = Math.floor(hexWidth * 0.07);
+        hex.innerHTML = `
+          <div class="rss-image-overlay" style="display:none"></div>
+          <div class="fav-nom-groupe" style="font-size: ${taillePoliceNom}px;">${zone.nom}</div>
+          <div class="fav-grille" style="grid-template-columns: repeat(${colonnes}, ${taille}px);">
+            ${zone.favoris.map(f => `
+              <a href="${f.url}" target="_blank" title="${f.nom}">
+                <img src="${f.icone}" alt="${f.nom}" width="${taille}" height="${taille}">
+              </a>
+            `).join('')}
+          </div>
+        `;
+    });
+}
+
+// ===== CHLOROFIL =====
+async function chargerChlorofil() {
+    try {
+        const response = await fetch('data/chlorofil.json');
+        const articles = await response.json();
+        articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const hexChlorofil = document.querySelectorAll('.hex.chlorofil');
+        hexChlorofil.forEach((hex, index) => {
+            const article = articles[index];
+            if (!article) return;
+
+            const date = new Date(article.date);
+            const dateFormatee = date.toLocaleDateString('fr-FR', {
+                day: '2-digit', month: 'long', year: 'numeric'
+            });
+
+            /*
+             * L'image est maintenant sur .chlorofil-inner (wrapper clipé)
+             * et non plus sur ::after — cela force tous les enfants
+             * (overlay compris) à rester dans la forme hexagonale.
+             */
+            hex.innerHTML = `
+              <div class="chlorofil-inner" style="background-image: url('${article.image}');">
+                <a href="${article.lien}" target="_blank" class="chlorofil-link">
+                  <div class="chlorofil-overlay">
+                    <p class="chlorofil-date">${dateFormatee}</p>
+                    <p class="chlorofil-titre">${article.titre}</p>
+                    <p class="chlorofil-desc">${article.description}</p>
+                  </div>
+                </a>
+              </div>
+            `;
+        });
+    } catch (error) {
+        console.error('Erreur chargement Chlorofil :', error);
+    }
+}
+
+// ===== RSS =====
+async function chargerFluxRSS(hexElement, fluxUrl, fluxNom) {
+    const nomEl = hexElement.querySelector('.rss-nom');
+    if (nomEl) nomEl.textContent = fluxNom;
+
+    const articlesContainer = hexElement.querySelector('.rss-articles');
+    const compteur = hexElement.querySelector('.rss-compteur');
+
+    try {
+        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(fluxUrl);
+        const response = await fetch(proxyUrl);
+        const texte = await response.text();
+
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(texte, 'text/xml');
+        const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
+
+        if (items.length === 0) {
+            articlesContainer.innerHTML = '<div class="rss-article active"><span class="rss-erreur">Aucun article</span></div>';
+            if (compteur) compteur.textContent = '0 / 0';
+            return;
+        }
+
+        const articles = items.map(item => {
+            let image = null;
+            const mediaContent   = item.querySelector('content');
+            const mediaThumbnail = item.querySelector('thumbnail');
+            const enclosure      = item.querySelector('enclosure');
+
+            if (mediaThumbnail?.getAttribute('url')) {
+                image = mediaThumbnail.getAttribute('url');
+            } else if (mediaContent?.getAttribute('url')) {
+                image = mediaContent.getAttribute('url');
+            } else if (enclosure?.getAttribute('url') && enclosure.getAttribute('type')?.startsWith('image')) {
+                image = enclosure.getAttribute('url');
+            }
+
+            return {
+                titre: item.querySelector('title')?.textContent?.trim() || 'Sans titre',
+                lien:  item.querySelector('link')?.textContent?.trim() || '#',
+                image: image
+            };
+        });
+
+        initCarrousel(hexElement, articles);
+
+    } catch (error) {
+        console.warn(`Erreur RSS (${fluxNom}):`, error);
+        articlesContainer.innerHTML = '<div class="rss-article active"><span class="rss-erreur">Flux indisponible</span></div>';
+        if (compteur) compteur.textContent = '-';
+    }
+}
+
+function initCarrousel(hexElement, articles) {
+    const articlesContainer = hexElement.querySelector('.rss-articles');
+    const compteur = hexElement.querySelector('.rss-compteur');
+    let current = 0;
+    let timer = null;
+
+    // Injection des articles
+    articlesContainer.innerHTML = '';
+    articles.forEach((art, i) => {
+        const div = document.createElement('div');
+        div.className = 'rss-article' + (i === 0 ? ' active' : '');
+        div.innerHTML = `<a href="${art.lien}" target="_blank">${art.titre}</a>`;
+        if (art.image) div.dataset.image = art.image;
+        articlesContainer.appendChild(div);
+    });
+
+    const tous = articlesContainer.querySelectorAll('.rss-article');
+
+    function afficher(index) {
+        tous.forEach(a => a.classList.remove('active'));
+        tous[index].classList.add('active');
+        current = index;
+        if (compteur) compteur.textContent = `${current + 1} / ${tous.length}`;
+
+        /*
+         * Changement du fond via la variable CSS --bg-image sur ::after.
+         * On ajoute/retire la classe has-image pour basculer
+         * les couleurs de texte et l'overlay sombre.
+         */
+        const img = tous[index].dataset.image;
+        if (img) {
+            hexElement.style.setProperty('--bg-image', `url('${img}')`);
+            hexElement.classList.add('has-image');
+        } else {
+            hexElement.style.removeProperty('--bg-image');
+            hexElement.classList.remove('has-image');
+        }
+    }
+
+    function suivant()   { afficher((current + 1) % tous.length); }
+    function precedent() { afficher((current - 1 + tous.length) % tous.length); }
+
+    function demarrerAuto() {
+        stopperAuto();
+        timer = setInterval(suivant, 5000);
+    }
+    function stopperAuto() {
+        if (timer) clearInterval(timer);
+    }
+
+    hexElement.querySelector('.rss-prev').addEventListener('click', () => { precedent(); demarrerAuto(); });
+    hexElement.querySelector('.rss-next').addEventListener('click', () => { suivant();   demarrerAuto(); });
+    hexElement.addEventListener('mouseenter', stopperAuto);
+    hexElement.addEventListener('mouseleave', demarrerAuto);
+
+    afficher(0);
+    demarrerAuto();
+}
+
+async function chargerTousLesFlux() {
+    try {
+        const response = await fetch('data/flux-rss.json');
+        const data = await response.json();
+
+        data.flux.forEach((flux, index) => {
+            if (!flux.url) return;
+            const hexElement = document.querySelector(`.hex.rss[data-flux-index="${index}"]`);
+            if (hexElement) {
+                chargerFluxRSS(hexElement, flux.url, flux.nom);
+            }
+        });
+
+    } catch (error) {
+        console.error('Erreur chargement flux-rss.json :', error);
+    }
+}
+
+// ===== LANCEMENT =====
+document.addEventListener('DOMContentLoaded', () => {
+    chargerFavoris();
+    chargerChlorofil();
+    chargerTousLesFlux();
+});
+
+window.addEventListener('resize', chargerFavoris);
+</script>
+
+</body>
 </html>

@@ -2,70 +2,92 @@
   "zones": [
     {
       "id": 1,
-      "nom": "Pédagogie",
+      "nom": "IA",
       "favoris": [
-        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
-        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
-        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
-        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" },
-        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
-        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
-        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
-        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" }
+        { "nom": "Mammouth",    "icone": "icones/Mammouth.svg",     "url": "https://mammouth.ai/app/a/default" },
+        { "nom": "Perplexity",  "icone": "icones/Perplexity.svg",   "url": "https://www.perplexity.ai/" },
+        { "nom": "NotebookLM",  "icone": "icones/NotebookLM.svg",   "url": "https://notebooklm.google.com/?icid=home_maincta&pli=1" },
+        { "nom": "Claude",      "icone": "icones/Claude.svg",       "url": "https://claude.ai/login" },
+        { "nom": "Mistral",     "icone": "icones/Mistral.svg",      "url": "https://v2.auth.mistral.ai/login?flow=16f22837-7b33-4cc8-9e9b-6d3aa55dbaa3" },
+        { "nom": "Lumo",        "icone": "icones/Lumo.png",         "url": "https://lumo.proton.me/u/6/" },
+        { "nom": "Gemini",      "icone": "icones/Gemini.svg",       "url": "https://gemini.google.com/app?utm_source=app_launcher&utm_medium=owned&utm_campaign=base_all" },
+        { "nom": "ChatGPT",     "icone": "icones/ChatGPT.svg",      "url": "https://chatgpt.com/" },
+        { "nom": "Copilot",     "icone": "icones/Copilot.svg",      "url": "https://copilot.microsoft.com/login" }
       ]
     },
     {
       "id": 2,
-      "nom": "Ressources",
+      "nom": "Google",
       "favoris": [
-        { "nom": "Wikipedia", "icone": "icones/wikipedia.png", "url": "https://fr.wikipedia.org/" },
-        { "nom": "YouTube",   "icone": "icones/youtube.png",   "url": "https://www.youtube.com/" }
+        { "nom": "Gmail",       "icone": "icones/Gmail.svg",        "url": "https://mail.google.com/mail/?authuser=0" },
+        { "nom": "Classroom",   "icone": "icones/Classroom.svg",    "url": "https://classroom.google.com/?authuser=0" },
+        { "nom": "Drive",       "icone": "icones/Drive.svg",        "url": "https://drive.google.com/?authuser=0" },
+        { "nom": "Youtube",     "icone": "icones/YouTube.svg",      "url": "https://www.youtube.com/?authuser=0" },
+        { "nom": "Maps",        "icone": "icones/Maps.svg",         "url": "https://maps.google.com/?authuser=0" },
+        { "nom": "Docs",        "icone": "icones/Docs.svg",         "url": "https://docs.google.com/document/?usp=docs_ald&authuser=0" },
+        { "nom": "Sheets",      "icone": "icones/Sheets.svg",       "url": "https://docs.google.com/spreadsheets/?usp=sheets_ald&authuser=0" },
+        { "nom": "Slide",       "icone": "icones/Slides.svg",       "url": "https://docs.google.com/presentation/?usp=slides_ald&authuser=0" },
+        { "nom": "Forms",       "icone": "icones/Forms.svg",        "url": "https://docs.google.com/forms/?authuser=0" }
       ]
     },
     {
       "id": 3,
-      "nom": "Outils",
+      "nom": "Pédagogique",
       "favoris": [
-        { "nom": "Gmail",  "icone": "icones/gmail.png",  "url": "https://mail.google.com/" },
-        { "nom": "Drive",  "icone": "icones/drive.png",  "url": "https://drive.google.com/" },
-        { "nom": "Canva",  "icone": "icones/canva.png",  "url": "https://www.canva.com/" }
+        { "nom": "Genially",            "icone": "icones/Genially.png","url": "https://auth.genially.com/login?backTo=https%3A%2F%2Fapp.genially.com%2Fdashboard%2F" },
+        { "nom": "Outils pédagogiques", "icone": "icones/Outils_pedagogiques.gif","url": "https://bioteach-cyber.github.io/outils-pedagogiques/" },
+        { "nom": "Magnific",            "icone": "icones/Magnific.svg","url": "https://www.magnific.com/log-in?client_id=magnific&lang=fr" },
+        { "nom": "Wooclap",             "icone": "icones/Wooclap.ico","url": "https://app.wooclap.com/home" },
+        { "nom": "Whimsical",           "icone": "icones/Whimsical.svg","url": "https://whimsical.com/login" },
+        { "nom": "Kahoot",              "icone": "icones/Kahoot.svg","url": "https://create.kahoot.it/auth/login" },
+        { "nom": "1cours1bot",          "icone": "icones/1cours1bot.png","url": "https://1cours1bot.fr/login" },
+        { "nom": "Sketchfab",           "icone": "icones/sketchfab.svg","url": "https://sketchfab.com/" },
+        { "nom": "Sciencephoto",        "icone": "icones/science-photo-library.png","url": "https://www.sciencephoto.fr/" }
       ]
     },
         {
       "id": 4,
-      "nom": "test",
+      "nom": "Administratif",
       "favoris": [
-        { "nom": "Gmail",  "icone": "icones/gmail.png",  "url": "https://mail.google.com/" },
-        { "nom": "Drive",  "icone": "icones/drive.png",  "url": "https://drive.google.com/" },
-        { "nom": "Canva",  "icone": "icones/canva.png",  "url": "https://www.canva.com/" }
+        { "nom": "EcoleDirect","icone": "icones/Ecole_Direct.png","url": "https://www.ecoledirecte.com/login?cameFrom=%2FAppel" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" }
       ]
     },
         {
       "id": 5,
-      "nom": "Pédagogie",
+      "nom": "",
       "favoris": [
-        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
-        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
-        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
-        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" },
-        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
-        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
-        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
-        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" }
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" }
       ]
     },
         {
       "id": 6,
-      "nom": "Pédagogie",
+      "nom": "",
       "favoris": [
-        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
-        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
-        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
-        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" },
-        { "nom": "Pronote",   "icone": "icones/pronote.png",   "url": "https://www.index-education.com/" },
-        { "nom": "ENT",       "icone": "icones/ent.png",       "url": "https://ent.example.fr/" },
-        { "nom": "Eduscol",   "icone": "icones/eduscol.png",   "url": "https://eduscol.education.fr/" },
-        { "nom": "Chlorofil", "icone": "icones/chlorofil.png", "url": "https://chlorofil.fr/" }
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" },
+        { "nom": "","icone": "","url": "" }
       ]
     }
   ]

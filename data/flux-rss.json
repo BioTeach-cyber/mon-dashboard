@@ -1,8 +1,13 @@
 {
   "flux": [
     {"nom": "National Géographic",  "url": "https://www.nationalgeographic.fr/api/rss/latest_contents.xml" },
-    {"nom": "",  "url": "" },
-    {"nom": "",  "url": "" },
-    {"nom": "",  "url": "" }
+    {"nom": "CNRS",  "url": "https://lejournal.cnrs.fr/rss" },
+    {"nom": "Futura Actus",  "url": "https://www.futura-sciences.com/rss/actualites.xml" },
+    {"nom": "Futura Dossiers",  "url": "https://www.futura-sciences.com/rss/dossiers.xml" },
+    {"nom": "Le Monde Science",  "url": "https://www.lemonde.fr/sciences/rss_full.xml" },
+    {"nom": "Le Monde Culture Web",  "url": "https://www.lemonde.fr/cultures-web/rss_full.xml" },
+    {"nom": "Le Monde Planète",  "url": "https://www.lemonde.fr/planete/rss_full.xml" },
+    {"nom": "CEA",  "url": "https://www.cea.fr/presse/_layouts/15/i2i/web/ceasrchrss.ashx?pid=96&wid=g_e7861077_8847_4ce3_8a2d_f487f576025e" },
+    {"nom": "Zataz",  "url": "https://www.zataz.com/rss/zataz-news.rss" }
   ]
 }
